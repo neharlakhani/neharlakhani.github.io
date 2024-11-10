@@ -60,7 +60,7 @@ img {
 
 .image-container {
   width: 100%;
-  max-width: 800px; /* Adjust this value based on your layout */
+  max-width: 300px; /* Adjust this value based on your layout */
   margin: 0 auto; /* Centers the container */
 }
 /**
