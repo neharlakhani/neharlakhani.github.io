@@ -33,7 +33,7 @@
       
       <!-- Menu link fragment #id should match a div id. Example: <a href="#proposal"> links to <div id="proposal"></div>  -->
       <ul class="main-menu">
-        <li><a href="#proposal">Proposal</a></li>
+        <li><a href="proposal.html" id="proposal-link">Proposal</a></li>
         <li><a href="#midterm">Mid-Term</a></li>
         <li><a href="#final">Final</a></li>
       </ul>                 
@@ -51,22 +51,60 @@
           </div>
           
           <div id="midterm" class="content-region hide">
-            <h2>midterm</h2>
-            <p>
-              Sed tempus urna et pharetra pharetra massa massa ultricies. Porttitor rhoncus dolor purus non enim praesent. Id aliquet risus feugiat in ante metus dictum. 
-            </p>
-          </div>
+            <h2>Midterm: Image Driven Skin Cancer Diagnosis</h2>
+      
+            <section id="introduction">
+                <h2>Introduction and Background</h2>
+                <p>One in five Americans will be diagnosed with skin cancer by the time they turn 70. More than two people die of skin cancer every hour. Unlike other aggressive cancers, skin cancer has a five-year survival rate greater than 95% provided it is detected and treated early. This makes timely and accurate diagnosis the need of the hour.</p>
+                <p>Traditionally, skin lesions are diagnosed manually by visual dermatologist examinations followed by biopsies. Given the growing shortage of dermatologists, automating the diagnostic process would reduce the burden on our medical systems in terms of time, cost and effort, and improve timely accessibility of diagnostic mechanisms to wider segments of society.</p>
+            </section>
+        
+            <section id="dataset">
+                <h2>Dataset</h2>
+                <p>ISIC 2024 - Skin Cancer Detection with 3D-TBP is a collection of around 400,000 images of isolated skin lesions taken from 3D full body images. Each lesion image is cropped and labelled to indicate if the lesion is benign or malignant. The data also includes significant metadata, like the patient's age, gender, which can improve training of the machine learning models.</p>
+            </section>
+      
+            <section id="problem-definition">
+                <h2>Problem Definition</h2>
+                <p>Of the three major types of skin cancer (Basal Cell, Squamous Cell and Melanoma), Melanoma, while less common, is the deadliest and is estimated to be diagnosed 200,000 times in the US in 2024 with 9000 projected to succumb to it. Skin cancer has a nearly 95% cure rate provided the patient has an early diagnosis and treatment.</p>
+                <p>The challenge is to develop an automated system for malignancy prediction in skin lesions using their images.</p>
+            </section>
+        
+            <section id="methods">
+                <h2>Methods</h2>
+                <h3>Data Preprocessing</h3>
+                <ul>
+                    <li>Down-sampling Benign Tumors</li>
+                    <li>Focused Augmentation of Malignant Tumors</li>
+                    <li>Image Normalizations</li>
+                    <li>Image Resizing</li>
+                </ul>
+      
+                <h3>Exploratory Data Analysis</h3>
+                <img src="path_to_eda_image.jpg" alt="EDA Results">
+                <p>Both classes have a similar distribution of image means, deviations and skewness as a whole and in each quartile. However, benign tumors generally have slightly higher mean pixel intensities and greater variation in pixel intensity, suggesting that they are brighter on average.</p>
+        
+                <h3>Unsupervised Learning</h3>
+                <img src="path_to_clustering_image.jpg" alt="Clustering Results">
+                <p>We see clear, demarcated clusters which indicate the presence of distinct feature groups within our dataset.</p>
+            </section>
+        
+            <section id="supervised-learning">
+                <h2>Supervised Learning</h2>
+                <p>Results and discussion to be added...</p>
+            </section>       
+            </div>
           
-          <div id="final" class="content-region hide">
-            <h2>final</h2>
-            <p>
-              Pellentesque nec nam aliquam sem et tortor consequat. Quisque sagittis purus sit amet volutpat consequat. Magna eget est lorem ipsum dolor. 
-            </p>
-          </div>
+            <div id="final" class="content-region hide">
+              <h2>final</h2>
+              <p>
+              Nothing here yet!  
+              </p>
+            </div>
           
+          </div>
         </div>
       </div>
-    </div>
 
     <footer>  
       
@@ -74,11 +112,12 @@
     
     <!-- Script for redirection when #proposal is opened -->
     <script type="text/javascript">
-      // Listen for a click event on the proposal section
-      document.getElementById("proposal").addEventListener("click", function() {
-        // Redirect to another page
-        window.location.href = "proposal.html"; // Replace with your desired URL
+      document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById("proposal-link").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        window.location.href = "proposal.html"; // Redirect to proposal.html
       });
+    });
     </script>
     
   </body>
