@@ -111,13 +111,28 @@
     </footer>
     
     <!-- Script for redirection when #proposal is opened -->
-    <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById("proposal-link").addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "proposal.html"; // Redirect to proposal.html
+    <script>
+      $(document).ready(function() {
+        // Show the first content region by default
+        $('.content-region').first().show();
+    
+        // Handle menu item clicks
+        $('.main-menu a').click(function(e) {
+          e.preventDefault();
+          var target = $(this).attr('href');
+          
+          // If it's the proposal link, let the existing code handle it
+          if (target === 'proposal.html') {
+            return;
+          }
+    
+          // Hide all content regions
+          $('.content-region').hide();
+          
+          // Show the target content region
+          $(target).show();
+        });
       });
-    });
     </script>
     
   </body>
