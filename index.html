@@ -115,27 +115,21 @@
     
     <!-- Script for redirection when #proposal is opened -->
     <script>
-      // $(document).ready(function() {
-      //   // Show the first content region by default
-      //   $('.content-region').first().show();
+      $(document).ready(function() {
+        // Show the first content region by default
+        $('.content-region').first().show();
     
-      //   // Handle menu item clicks
-      //   $('.main-menu a').click(function(e) {
-      //     e.preventDefault();
-      //     var target = $(this).attr('href');
+        // Handle menu item clicks
+        $('.main-menu a').click(function(e) {
+          e.preventDefault();
+          var target = $(this).attr('href');
+          // Hide all content regions
+          $('.content-region').hide();
           
-      //     // If it's the proposal link, let the existing code handle it
-      //     if (target === 'proposal.html') {
-      //       return;
-      //     }
-    
-      //     // Hide all content regions
-      //     $('.content-region').hide();
-          
-      //     // Show the target content region
-      //     $(target).show();
-      //   });
-      // });
+          // Show the target content region
+          $(target).show();
+        });
+      });
     </script>
     
   </body>
