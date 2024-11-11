@@ -183,12 +183,99 @@
                     <h3>Unsupervised Learning</h3>
                     <p>Ground Truth data is hard to come by in medical applications due to privacy concerns. Being able to solve the diagnosis problem with an unsupervised approach would enable significant progress in the area. Thus, despite having ground truth labels, we attempt to find coherent clusters and map available ground truth with the clusters and evaluate the performance of the clustering algorithms in solving the lesion identification problem. We clustered images based on image mean, standard deviations, skewness, RGB channel means and other essential features highlighted in Figure X. We determined through reading and experimentation that the number of clusters in our dataset is around 4. We used this as our k parameter and conducted clustering through K-means and Gaussian Mixture Models. In order to conduct clustering through GMM, we had to ensure feature normality. Two features - image standard deviation and image skew needed further normalization before clustering. 
                     </p>
+                    <h3>Supervised Learning</h3>
+                    <p>Currently, five transfer learning based approaches have been explored and their performance compared. The goal is to continue to train and compare more state of the art computer vision models before finalizing on our primary model.
+                    </p>
+                    <p>
+                      ImageNet is a large image collection (~14M images and 20K+ classes) which contains diverse data for general object recognition. While not a disease focused dataset, it has shown success in various medical image classification tasks. In this approach, models pre-trained on ImageNet are used as a starting point. Low-level features like edge and texture based analysis could be transferable to lesion identification. 
+                    </p>
+                    <p>
+                      Particularly at this stage - NASNet, EfficientNetB0, Xception and Densenet were trained with ImageNet weights as starting points. All three are powerful CNN models in the computer vision (CV) space, with architectures optimized for efficient, high-performance image classification.
+                    </p>
+                    <p>
+                      <b>NASNet</b>: NASNet is designed using Neural Architecture Search (NAS), enabling the automated discovery of optimal network architectures. This project uses NASNetMobile, a lightweight version ideal for mobile and embedded applications. This CNN uses a combination of normal and reduction cells obtained from NAS, and it has approximately 5.3 million parameters.
+                    </p>
+                    <p>
+                      <b>EfficientNetB0</b>: EfficientNetB0, developed by Google, is the baseline model in the EfficientNet family. It employs compound scaling, focusing on the uniform scaling of network width, depth, and resolution to balance accuracy and efficiency. This CNN is based on MobileNetV2, utilizing inverted residual blocks with added squeeze-and-excitation (SE) blocks for enhanced performance. It also has about 5.3 million parameters.
+                    </p>
+                    <p>
+                     <b>Xception</b>: Xception is inspired by the Inception architecture but replaces Inception modules with depthwise separable convolutions, resulting in significantly deeper models with fewer connections and improved efficiency for specific tasks. Xception has approximately 22.9 million parameters.
+                    </p>
+                    <p>
+                      <b>ResNet50</b>: contains exactly 50 layers in total that are divided into convolutional layers, pooling layers and fully connected layers. Resnet uses residual blocks which include skip/shortcut connections which aid the network in learning residual functions for layer inputs instead of learning unreferenced functions. It allows for easier optimization and improved accuracy in comparison to plainer networks of the same depth. At ~25.6 M parameters, it is one of the bigger models.
+                    </p>
+                    <p>
+                      <b>DenseNet</b>: Densely Connected Convolutional Networks is a CNN model that has dense connectivity between layers. Each layer here in DenseNet is directly connected to every other layer in a feed-forward fashion and feature reuse is promoted by allowing each layer to access feature maps from all previous layers. It has a compact structure as it requires fewer parameters compared to traditional CNNs. Its most popular variant - DenseNet 121 has 8M parameters making it relatively lightweight.
+                    </p>
+                    <p>
+                      Unlike NASNet and EfficientNet, which come in a variety of sizes to meet different computational environments, Xception is not designed to scale flexibly based on computational needs. NASNet is generally known for achieving high accuracy, though it is computationally expensive. In contrast, EfficientNetB0 is valued for maintaining a good balance between accuracy and efficiency. Efficiency may be a key concern when deploying this application to mobile devices to enhance accessibility for patients. Densenet introduces a hyperparameter that provides the trainer more fine-grained control over the number of new features added to each layer. DenseNet also uses features at all complexity levels leading to smoother decision boundaries.
+                    </p>
+                    <p>
+                      For each of the models, after freezing the ImageNet weights for our initial base layer, custom base layers were added. A GlobalAveragePooling2D layer was added to reduce spatial dimensions and to prioritize important features. A dense layer with ReLU activation was added to aid additional feature extraction and a layer with sigmoid activation was added to aid binary classification. The models were compiled using Adam optimizer (LR: 0.0001), binary cross entropy was used as the loss function and accuracy was our main evaluation metric.
+                    </p>
                   </section>
         
-            <section id="supervised-learning">
-                <h2>Supervised Learning</h2>
-                <p>Results and discussion to be added...</p>
-            </section>       
+            <section id="results and discussion">
+                <h4>Exploratory Data Analysis</h4>
+                <p>From figure 1 we notice that both classes (Benign = 0 and Malignant = 1) have a similar distribution of image means, deviations and skewness as a whole and in each quartile. However, benign tumors generally have slightly higher mean pixel intensities and greater variation in pixel intensity (higher standard deviation), suggesting that they are brighter on average. The most noticeable difference is in the color channels (red, green, blue), where benign images exhibit slightly higher tones across all channels compared to malignant ones..</p>
+                <h4>Unsupervised Learning</h4>
+                <p>
+                  The elbow method was used to identify the number of clusters as 4 (Figure 2). We see four clearly demarcated clusters using both K-mean and GMM (Figure 3). The soft clustering properties of GMM were leveraged to get a better understanding of the dataset. The counts of all images that had the same first and second most likely clusters were plotted in order to understand feature similarity in the dataset. From Figure 4 we conclude that the images closer geometrically on the graph are also easier to miscategorize since they are very close to other groups.
+                </p>
+                <h4>Supervised Learning</h4>
+                <p>
+                  On comparing model accuracy (Figure 5), DenseNet performs best with an accuracy of 86.87%. Xception is a close second with an accuracy of 83.47% however, there is a large difference in the number of parameters between the two models with DenseNet having only 8M parameters compared to Xception’s 22.9M parameters. While optimizing for efficiency (Figure 6) in parameter size might not always be a good idea - as demonstrated by EfficientNet which has an accuracy of ~57% with 5.3M parameters, DenseNet provides the best accuracy-efficiency trade-off by having the highest accuracy for a relatively smaller number of parameters - it is our current selected model. NasNet is a close contender if accuracy can be traded-off for better efficiency - with an accuracy of 81.63% it uses approximately half (~4.3M) the parameters as DenseNet.
+                </p>
+                <p>
+                  Figure 7 shows the progress of validation loss and accuracy with the number of epochs. For some models, we notice an increase in validation loss and decrease in validation accuracy while the same metrics improve in the opposite direction for the training dataset. This has been identified as a sign of potential overfitting. The team is working on strategies to mitigate overfitting. This may include, using the early stopping based on validation loss, regularization or further data augmentation. 
+                </p>
+                <p>
+                  Accuracy and loss are not sufficient in characterizing model performance in imbalance datasets. Further, in diagnostic settings, it is important to ensure good precision and recall due to the wide-ranging implication of mis-diagnosis. Being diagnosed with cancer causes severe mental and emotional distress - hence a low precision or high false positive rates can severely impact the well-being of the misdiagnosed patients. As mentioned earlier, timely diagnosis is the need of the hour, hence it is very important to reduce the number of false negatives and significantly improve our recall. As demonstrated by the AUC (Figure 8) for each model, even the models with high accuracy, have concerningly low AUC - this may be due to the heavy class imbalance in the dataset. The confusion matrix (Figure 9) also clearly indicates highly imprecise predictions. EfficientNetB0, for example, classifies everything as Benign - a clear sign of class imbalance. Even our model of choice - DenseNet categorizes a majority of Malignant Tumors as Benign (64.85%) and categorizes 37.45% of benign tumors as malignant. In addition to strategies specified earlier in the discussion, strategies like SMOTE, stratified sampling, weighted evaluation metrics, feature engineering will be used to correct the current model performance issues.
+                </p>
+                <h4>Next Steps</h4>
+                <p>To summarize, next steps include:</p>
+                  <p>
+                      Addressing class imbalance using techniques like SMOTE, stratified sampling, weighted 
+                      evaluation metrics, feature engineering, feature selection and cross-validation.
+                  </p>
+                  <p>
+                      Addressing overfitting through strategies like early stopping based on validation loss, 
+                      regularization or further data augmentation.
+                  </p>
+                  <p>
+                      Further exploration of models with focus on models proved effective on imbalanced datasets.
+                  </p>
+                  <p>
+                      Focus on cost sensitive learning to improve precision and recall.
+                  </p>
+                  <p>
+                      Sustainability focused performance analysis of shortlisted models.
+                  </p>
+              </section>
+              <section id="gantt-chart">
+                <h2>Gantt Chart</h2>
+              </section>  
+              <section id="contribution-table">
+                <h2>Contribution Table</h2>
+              </section> 
+              <section id="references">
+                <h2>References</h2>
+                <p>
+                  [1] A. Esteva, B. Kuprel, R. A. Novoa, J. Ko, S. M. Swetter, H. M. Blau, and S. Thrun,"Dermatologist-level classiﬁcation of skin cancer with deep neural networks," Nature,vol. 542, no. 7639, pp. 115–118, 2017.
+                </p>
+                <p>
+                  [2] M. Naqvi, S. Q. Gilani, T. Syed, O. Marques, and H.-C. Kim, "Skin cancer detection using deep learning—a review," Diagnostics, vol. 13, no. 11, p. 1911, 2023.
+                </p>
+                <p>
+                  [3] S. S. Han, M. S. Kim, W. Lim, G. H. Park, I. Park, and S. E. Chang, "Classiﬁcation of the clinical images for benign and malignant cutaneous tumors using a deep learning algorithm," Journal of Investigative Dermatology, vol. 138, no. 7, pp. 1529–1538, 2018.
+                </p>
+                <p>
+                  [4] Y. Liu et al., “A deep learning system for differential diagnosis of skin diseases,” Nature Medicine, vol. 26, no. 6, pp. 900–908, 2020.
+                </p>
+                <p>
+                  [5] J. Savulescu, A. Giubilini, R. Vandersluis, and A. Mishra, “Ethics of artificial intelligence in medicine,” Singapore Medical Journal, vol. 65, no. 3, p. 150, 2024.
+                </p>
+              </section> 
             </div>
           
             <div id="final" class="content-region hide">
