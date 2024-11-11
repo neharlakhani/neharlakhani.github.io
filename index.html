@@ -73,12 +73,6 @@
                     pictures regularly submitted in telehealth settings.
                 </p>  
               </section>
-      
-            <section id="problem-definition">
-                <h2>Problem Definition</h2>
-                <p>Of the three major types of skin cancer (Basal Cell, Squamous Cell and Melanoma), Melanoma, while less common, is the deadliest and is estimated to be diagnosed 200,000 times in the US in 2024 with 9000 projected to succumb to it. Skin cancer has a nearly 95% cure rate provided the patient has an early diagnosis and treatment.</p>
-                <p>The challenge is to develop an automated system for malignancy prediction in skin lesions using their images.</p>
-            </section>
             <section id="lit-review">
               <h2>Literature Review</h2>
               <p>
@@ -110,27 +104,86 @@
                   including explainability, reliability, privacy, responsibility and dehumanization.
               </p>  
             </section>
+            <section id="problem-definition">
+              <h2>Problem Definition</h2>
+              <h3>Problem</h3>
+                <p>
+                  Of the three major types of skin cancer (Basal Cell, Squamous Cell and Melanoma), 
+                  Melanoma, while less common, is the deadliest and is estimated to be diagnosed 200,000 
+                  times in the US in 2024 with 9000 projected to succumb to it. Skin cancer has a nearly 
+                  95% cure rate provided the patient has an early diagnosis and treatment. This makes 
+                  diagnosis of skin cancer a time-sensitive problem. Additionally, studies report a 
+                  decline in the number of dermatologists available and in the post-covid era, our health 
+                  care systems are operating under heavy burdens.
+              </p>
+              
+              <p>
+                  Accessible diagnostic methods are the need of the hour. Telehealth allows patients who 
+                  otherwise lack access to timely diagnosis receive crucial care. The challenge is to 
+                  develop an automated system for malignancy prediction in skin lesions using their 
+                  images. This system can be used in telehealth settings where users can upload pictures 
+                  of lesions to get a preliminary understanding of their skin condition.
+              </p>
+              <h3>Motivation</h3>
+                <p>
+                  By building an ML model that can classify skin lesion images as cancerous or 
+                  non-cancerous, this project aims to:
+              </p>
+              
+              <p>
+                  ● Improve detection rates at early stages<br>
+                  ● Provide a second opinion for dermatologists to rely on<br>
+                  ● Provide access to regions lacking professional diagnostic services
+              </p>
+
+            </section>
             <section id="methods">
                 <h2>Methods</h2>
                 <h3>Data Preprocessing</h3>
-                <ul>
-                    <li>Down-sampling Benign Tumors</li>
-                    <li>Focused Augmentation of Malignant Tumors</li>
-                    <li>Image Normalizations</li>
-                    <li>Image Resizing</li>
-                </ul>
-      
-                <h3>Exploratory Data Analysis</h3>
-                <div class="image-container">
-                  <img src="eda_image.jpg" alt="EDA Results">
-                </div>
+                  <h4>Down-sampling Benign Tumors</h4>
+                    <p>
+                        One of the primary concerns with the dataset is the large imbalance between the number 
+                        of benign tumors (~400k) and the number of malignant tumors (~400). To address this, we 
+                        downsampled the number of benign tumors by randomly sampling using the reservoir 
+                        sampling algorithm, ensuring uniform random selection of elements without replacement. 
+                        We retained 10k images of benign tumors using this process.
+                    </p>
+
+                    <h4>Focused Augmentation of Malignant Tumors</h4>
+                    <p>
+                        In order to improve data variability and address class imbalance by increasing 
+                        representation of malignant tumors we did focused augmentation of malignant tumors. We 
+                        performed 16 augmentations on each image. The augmentations performed include geometric 
+                        transformations like flipping, rotating, distorting as well as color and lighting 
+                        modifications including modifying brightness, contrast, saturation, hues, CLAHE. Adding 
+                        noise and blurring effects including motion and gaussian blur and gauss noise and 
+                        finally simulating occlusions and missing data by cutting out random rectangular 
+                        sections from the image.
+                    </p>
+
+                    <h4>Image Normalizations</h4>
+                    <p>
+                        We further normalized values of all pixels to be between 0 and 1 in order to improve 
+                        faster convergence, aid optimal weight initialization and promote model stability and 
+                        generalization.
+                    </p>
+
+                    <h4>Image Resizing</h4>
+                    <p>
+                        Finally all images were resized to a standard dimension (128x128) to ensure consistency, 
+                        reduce computational loads, improve training time and memory efficiency.
+                    </p>
+
+                    <h3>Exploratory Data Analysis</h3>
+                    <p>
+                        Post pre-processing the data, exploratory data analysis was conducted to better 
+                        understand the data. This involved calculating image means, deviations, color channels and comparing their distributions across the two target classes.
+                    </p>
                 
-                <p>Both classes have a similar distribution of image means, deviations and skewness as a whole and in each quartile. However, benign tumors generally have slightly higher mean pixel intensities and greater variation in pixel intensity, suggesting that they are brighter on average.</p>
-        
-                <h3>Unsupervised Learning</h3>
-                <!-- <img src="path_to_clustering_image.jpg" alt="Clustering Results"> -->
-                <p>We see clear, demarcated clusters which indicate the presence of distinct feature groups within our dataset.</p>
-            </section>
+                    <h3>Unsupervised Learning</h3>
+                    <p>Ground Truth data is hard to come by in medical applications due to privacy concerns. Being able to solve the diagnosis problem with an unsupervised approach would enable significant progress in the area. Thus, despite having ground truth labels, we attempt to find coherent clusters and map available ground truth with the clusters and evaluate the performance of the clustering algorithms in solving the lesion identification problem. We clustered images based on image mean, standard deviations, skewness, RGB channel means and other essential features highlighted in Figure X. We determined through reading and experimentation that the number of clusters in our dataset is around 4. We used this as our k parameter and conducted clustering through K-means and Gaussian Mixture Models. In order to conduct clustering through GMM, we had to ensure feature normality. Two features - image standard deviation and image skew needed further normalization before clustering. 
+                    </p>
+                  </section>
         
             <section id="supervised-learning">
                 <h2>Supervised Learning</h2>
