@@ -50,7 +50,7 @@
             </p>
           </div>
           
-          <div id="midterm" class="content-region hide">
+          <div id="midterm" class="content-region hide section-container">
             <h2>Midterm: Image Driven Skin Cancer Diagnosis</h2>
       
             <section id="introduction">
@@ -220,7 +220,7 @@
                 <h3>Exploratory Data Analysis</h3>
                 <p>From figure 1 we notice that both classes (Benign = 0 and Malignant = 1) have a similar distribution of image means, deviations and skewness as a whole and in each quartile. However, benign tumors generally have slightly higher mean pixel intensities and greater variation in pixel intensity (higher standard deviation), suggesting that they are brighter on average. The most noticeable difference is in the color channels (red, green, blue), where benign images exhibit slightly higher tones across all channels compared to malignant ones..</p>
               <div class="image-container">
-                  <img src="fig1.png" alt="EDA Results">
+                  <img src="fig1.png" alt="EDA Results" onclick="openModal(this.src)">
               </div>
               <div class="image-container">
                 <img src="fig2.png" alt="EDA Results">
@@ -311,6 +311,10 @@
                 </p>
               </section> 
             </div>
+            <div id="imageModal" class="modal">
+              <span class="close" onclick="closeModal()">&times;</span>
+              <img class="modal-content" id="modalImage">
+           </div>
           
             <div id="final" class="content-region hide">
               <h2>Final</h2>
@@ -348,6 +352,14 @@
         window.location.hash = target;
       });
     });
+    function openModal(src) {
+    document.getElementById("modalImage").src = src;
+    document.getElementById("imageModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("imageModal").style.display = "none";
+    }
     </script>
     
   </body>
