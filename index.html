@@ -55,21 +55,61 @@
       
             <section id="introduction">
                 <h2>Introduction and Background</h2>
-                <p>One in five Americans will be diagnosed with skin cancer by the time they turn 70. More than two people die of skin cancer every hour. Unlike other aggressive cancers, skin cancer has a five-year survival rate greater than 95% provided it is detected and treated early. This makes timely and accurate diagnosis the need of the hour.</p>
-                <p>Traditionally, skin lesions are diagnosed manually by visual dermatologist examinations followed by biopsies. Given the growing shortage of dermatologists, automating the diagnostic process would reduce the burden on our medical systems in terms of time, cost and effort, and improve timely accessibility of diagnostic mechanisms to wider segments of society.</p>
-            </section>
+                <p>One in five Americans will be diagnosed with skin cancer by the time they turn 70. More than two people die of skin cancer every hour. Unlike other aggressive cancers, skin cancer has a five-year survival rate greater than 95% provided it is detected and treated early. This makes timely and accurate diagnosis the need of the hour.</p> <p>Traditionally, skin lesions are diagnosed manually by visual dermatologist examinations followed by biopsies. Given the growing shortage of dermatologists, automating the diagnostic process would reduce the burden on our medical systems in terms of time, cost and effort, and improve timely accessibility of diagnostic mechanisms to wider segments of society.</p>  
+              </section>
         
             <section id="dataset">
                 <h2>Dataset</h2>
-                <p>ISIC 2024 - Skin Cancer Detection with 3D-TBP is a collection of around 400,000 images of isolated skin lesions taken from 3D full body images. Each lesion image is cropped and labelled to indicate if the lesion is benign or malignant. The data also includes significant metadata, like the patient's age, gender, which can improve training of the machine learning models.</p>
-            </section>
+                <p>
+                  ISIC 2024 - Skin Cancer Detection with 3D-TBP is a collection of around 400,000 images 
+                  of isolated skin lesions taken from 3D full body images. Each lesion image is cropped 
+                  and labeled to indicate if the lesion is benign or malignant.
+                </p>
+                
+                <p>
+                    The data also includes signiﬁcant metadata, like the patient's age, gender, which can 
+                    improve training of the machine learning models. The images resemble regular, close-up 
+                    smartphone pictures in order to ensure the quality is representative of the kind of 
+                    pictures regularly submitted in telehealth settings.
+                </p>  
+              </section>
       
             <section id="problem-definition">
                 <h2>Problem Definition</h2>
                 <p>Of the three major types of skin cancer (Basal Cell, Squamous Cell and Melanoma), Melanoma, while less common, is the deadliest and is estimated to be diagnosed 200,000 times in the US in 2024 with 9000 projected to succumb to it. Skin cancer has a nearly 95% cure rate provided the patient has an early diagnosis and treatment.</p>
                 <p>The challenge is to develop an automated system for malignancy prediction in skin lesions using their images.</p>
             </section>
-        
+            <section id="lit-review">
+              <h2>Literature Review</h2>
+              <p>
+                  Skin cancer detection has signiﬁcantly beneﬁted from the advancements in deep learning 
+                  methodologies, offering improved accuracy and eﬃciency compared to traditional 
+                  diagnostic approaches. [1] demonstrated the effectiveness of CNNs in classifying skin 
+                  cancer with accuracy comparable to dermatologists. Their model was trained on over 
+                  129,000 clinical images, which shows the scalability of deep learning models. Studies 
+                  cited in [2] demonstrated that transfer learning signiﬁcantly enhances the performance 
+                  of models when applied to limited datasets. The authors also noted that integrating 
+                  deep learning models into clinical workﬂows can aid dermatologists in diagnosing skin 
+                  cancer.
+              </p>
+              
+              <p>
+                  [3] employed ResNet-152 to achieve high accuracy in skin cancer detection. Their 
+                  approach demonstrated the eﬃciency of using pre-trained models on large datasets and 
+                  ﬁne-tuning them on medical images, showcasing how transfer learning can compensate for 
+                  the limited availability of annotated medical data. Researchers at Google Health 
+                  presented DermAssist [4], a teledermatology AI system aimed at diagnosing around 26 
+                  different skin conditions through deep learning models trained on around 16K data 
+                  points collected from telehealth services. They found their system to be non-inferior 
+                  in performance in comparison to six dermatologists and clearly superior to six primary 
+                  care physicians and six nurse practitioners.
+              </p>
+              
+              <p>
+                  [5] presents 10 clear ethical risks involved in using AI within health-care settings 
+                  including explainability, reliability, privacy, responsibility and dehumanization.
+              </p>  
+            </section>
             <section id="methods">
                 <h2>Methods</h2>
                 <h3>Data Preprocessing</h3>
@@ -115,21 +155,25 @@
     
     <!-- Script for redirection when #proposal is opened -->
     <script>
-      $(document).ready(function() {
-        // Show the first content region by default
-        $('.content-region').first().show();
-    
-        // Handle menu item clicks
-        $('.main-menu a').click(function(e) {
-          e.preventDefault();
-          var target = $(this).attr('href');
-          // Hide all content regions
-          $('.content-region').hide();
-          
-          // Show the target content region
-          $(target).show();
-        });
+        $(document).ready(function() {
+      $('.content-region').hide();
+      
+      var hash = window.location.hash;
+      if (hash) {
+        $(hash).show();
+      } else {
+        $('#midterm').show();
+      }
+      
+      $('.main-menu a').click(function(e) {
+        e.preventDefault();
+        var target = $(this).attr('href');
+        
+        $('.content-region').hide();
+        $(target).show();
+        window.location.hash = target;
       });
+    });
     </script>
     
   </body>
