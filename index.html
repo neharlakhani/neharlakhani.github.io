@@ -473,6 +473,12 @@
                     <p>
                       <strong>DenseNet</strong>: Densely Connected Convolutional Networks is a CNN model that has dense connectivity between layers. Each layer here in DenseNet is directly connected to every other layer in a feed-forward fashion and feature reuse is promoted by allowing each layer to access feature maps from all previous layers. It has a compact structure as it requires fewer parameters compared to traditional CNNs. Its most popular variant - DenseNet 121 has 8M parameters making it relatively lightweight.
                     </p>
+                    </p>
+                      </strong>InceptionResNetV2</strong>: This architecture is very powerful when it comes to hierarchical learning of complex features. We hypothesized that this ability to capture such intricate patterns across scales would probably suit our dataset, especially where the minority class may show subtle or distinctive features. Also, the efficient design endowed with automatic robustness to overfitting makes this a strong candidate for the test, particularly in situations with small samples for the minority class. 
+                    </p>
+                    </p>
+                      </strong>VGG19</strong>: It's known for its strength in tasks requiring fine-grained categorization, so it matched well with our intention of bringing reliability even in the most unbalanced classes. Additionally, due to its comparably larger size (144 million parameters), it would be able to model an even more complex data distribution, possibly further differentiating between the classes: that of the majority and that of the minority. VGG19's simple architecture made it a good baseline against which to compare more complicated models like InceptionResNetV2 and those previously explored. 
+                    </p>
                     <p>
                       Unlike NASNet and EfficientNet, which come in a variety of sizes to meet different computational environments, Xception is not designed to scale flexibly based on computational needs. NASNet is generally known for achieving high accuracy, though it is computationally expensive. In contrast, EfficientNetB0 is valued for maintaining a good balance between accuracy and efficiency. Efficiency may be a key concern when deploying this application to mobile devices to enhance accessibility for patients. Densenet introduces a hyperparameter that provides the trainer more fine-grained control over the number of new features added to each layer. DenseNet also uses features at all complexity levels leading to smoother decision boundaries.
                     </p>
@@ -484,12 +490,6 @@
                     </p>
                     </p>
                     Since SMOTE failed to cope with the class imbalance of our image data, we have proceeded to study further models, InceptionResNetV2 and VGG19. The reason is that these architectures have unique feature extraction capabilities which may offer better handling of imbalanced datasets.
-                    </p>
-                    </p>
-                    InceptionResNetV2: This architecture is very powerful when it comes to hierarchical learning of complex features. We hypothesized that this ability to capture such intricate patterns across scales would probably suit our dataset, especially where the minority class may show subtle or distinctive features. Also, the efficient design endowed with automatic robustness to overfitting makes this a strong candidate for the test, particularly in situations with small samples for the minority class. 
-                    </p>
-                    </p>
-                    VGG19 - It's known for its strength in tasks requiring fine-grained categorization, so it matched well with our intention of bringing reliability even in the most unbalanced classes. Additionally, due to its comparably larger size (144 million parameters), it would be able to model an even more complex data distribution, possibly further differentiating between the classes: that of the majority and that of the minority. VGG19's simple architecture made it a good baseline against which to compare more complicated models like InceptionResNetV2 and those previously explored. 
                     </p>
                     </p>
                     Thus, we aim to differentiate these architectures to assess if they can capture class-specific features well in a balanced way without having to depend on SMOTE. This also renders a good scope to compare their performance with the five initial models (NASNet, EfficientNetB0, Xception, ResNet50, DenseNet) and identifying the most promising one for our classification task.
