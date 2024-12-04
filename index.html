@@ -504,7 +504,9 @@
                   <img src="fig1.png" alt="EDA Results" onclick="openModal(this.src)">
               </div>
                   <h3>Unsupervised Learning</h3>
-              <div class="image-container">
+              
+                  <h4>Clustering on Image Data</h4>
+                <div class="image-container">
                 <img src="fig2.png" alt="EDA Results" onclick="openModal(this.src)">
               </div>
               <div class="image-container">
@@ -513,10 +515,10 @@
               <div class="image-container">
                 <img src="fig4.png" alt="EDA Results" onclick="openModal(this.src)">
               </div>
-                  <h4>Clustering on Image Data</h4>
                 <p>
                   The elbow method was used to identify the number of clusters as 4 (Figure 2). We see four clearly demarcated clusters using both K-mean and GMM (Figure 3). The soft clustering properties of GMM were leveraged to get a better understanding of the dataset. The counts of all images that had the same first and second most likely clusters were plotted in order to understand feature similarity in the dataset. From Figure 4 we conclude that the images closer geometrically on the graph are also easier to miscategorize since they are very close to other groups.
                 </p>
+                <h4>Clustering on the Metadata</h4>
                 <div class="image-container">
                   <img src="final_fig5.png" alt="EDA Results" onclick="openModal(this.src)">
                 </div>
@@ -526,7 +528,6 @@
                 <div class="image-container">
                   <img src="final_fig7.png" alt="EDA Results" onclick="openModal(this.src)">
                 </div>
-                <h4>Clustering on the Metadata</h4>
                 </p>
                 The objective of this analysis was to evaluate the significance of metadata. We applied a K-Means to cluster the dataset based on metadata. We performed dimensionality reduction to project the data into two dimensions. This helped us visualize how the samples were distributed (Figure 5). However, despite using K-Means for clustering, no clear clusters emerged based on the metadata features alone. This lack of clear separation suggested that the metadata were not strongly indicative of distinct groupings in the data. As a result, clustering on the metadata did not provide any meaningful insights into the data’s structure.
                 </p>
